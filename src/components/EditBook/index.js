@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter} from 'react-router-dom'
 import { withFirebase } from '../Firebase'
 import * as ROUTES from '../../constants/routes'
 import { Button, Form, Grid, Header, Message, Segment} from 'semantic-ui-react';
@@ -25,11 +25,9 @@ class EditBookFormBase extends Component {
     }
 
     readTextFile = id => {
-        console.log(id)
         this.props.firebase.db.collection("books").doc(id)
             .get()
             .then( doc => {
-                console.log(doc.data(),"<doc")
                 this.setState({
                     author:doc.data().author,
                     title: doc.data().title,
@@ -42,7 +40,6 @@ class EditBookFormBase extends Component {
                     mounted:true
                 })
             })
-        console.log(this.state)
 	};
 
 

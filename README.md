@@ -1,68 +1,72 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#Tindawg
 
-## Available Scripts
 
-In the project directory, you can run:
+## Intro
 
-### `npm start`
+### Website URL
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+[Metatron](https://metatron-c9885.firebaseapp.com/bookshelf/taKwXBZy9ARHnKTAK2ARbChIjsp2) 
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+### Motivation
 
-### `npm test`
+This project is a full-stack development project of Jungbin Oh. Metatron is a web novel platform for authors who want to share their work online. Users can upload their work and receive likes and ratings by other users.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Built With
 
-### `npm run build`
+- HTML5
+- CSS3
+- JavaScript
+- React
+- Firebase
+- Semantic UI React
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Wireframe
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Sign In & Sign Up
+![main screenshot](screenshot/signin.png)
 
-### `npm run eject`
+![main screenshot](screenshot/signup.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Users can create their account to use the service.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Home
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![main screenshot](screenshot/home.png)
 
-### Code Splitting
+The home page displays the novels with top 5 views and top 5 likes.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
 
-### Analyzing the Bundle Size
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### Make Book
 
-### Making a Progressive Web App
+![main screenshot](screenshot/makebook.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+The user can upload their writing by uploading .txt file. The user can add information about their books such as title, description, and genre.
 
-### Advanced Configuration
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+### Bookshelf
 
-### Deployment
+![main screenshot](screenshot/bookshelf.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+The bookshelf displays the books that the user has uploaded and books that they liked.
 
-### `npm run build` fails to minify
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### Show Book 
+
+![main screenshot](screenshot/showbook.png)
+
+
+The user can read, like, and rate the material. If the user owns that book, he/she can edit or delete the book.
+
+
+
+
+
+
+

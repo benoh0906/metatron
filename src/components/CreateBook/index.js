@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import {Form, Grid, Header,Input, Button, Container, Select} from 'semantic-ui-react'
+import {Form, Grid, Header, Button, Container} from 'semantic-ui-react'
 import { withFirebase } from '../Firebase'
 import * as ROUTES from '../../constants/routes'
-
-import ReactDOM from 'react-dom';
-import {Editor, EditorState} from 'draft-js';
 
 const CreateBook = (props) => {
     return (
@@ -28,7 +25,6 @@ class CreateBookFormBase extends Component {
     onSubmit = e => {
         const { title,description, textFile, genre }= this.state
         const { authUser } = this.props
-        console.log(authUser)
 
         e.preventDefault()
 
@@ -63,11 +59,9 @@ class CreateBookFormBase extends Component {
     onChange = (e) => {
         if(e.target.name !== 'textFile'){
             this.setState({[e.target.name]: e.target.value})
-            console.log(e.target.name,'<e target name')
         
         } else {
             this.setState({textFile : e.target.files[0]})
-            console.log(e.target.files[0],"<e target")
         }
         console.log(this.state)
 

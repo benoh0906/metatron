@@ -61,7 +61,6 @@ class EditUserFormBase extends Component {
     }
 
     onChange = e => {
-        console.log(e.target.files)
         if(e.target.name !== 'image'){
             this.setState({[e.target.name]: e.target.value})
         } else {

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { withFirebase } from '../Firebase'
 import * as ROUTES from '../../constants/routes'
-import { Icon,Label, Rating, Button, Dimmer, Loader, Header, Segment} from 'semantic-ui-react';
+import { Rating, Button, Dimmer, Loader, Header, Segment} from 'semantic-ui-react';
 
 import './index.css';
 
@@ -77,11 +77,9 @@ class ShowBookFormBase extends Component {
     
 
     readTextFile = id => {
-        console.log(id)
         this.props.firebase.db.collection("books").doc(id)
             .get()
             .then( doc => {
-                console.log(doc.data(),"<doc")
                 this.setState({
                     author:doc.data().author,
                     title: doc.data().title,
@@ -117,7 +115,6 @@ class ShowBookFormBase extends Component {
         this.props.firebase.db.collection("books").doc(this.props.match.params.id).delete()
             .then(() => {
                 this.props.history.push(`${ROUTES.BOOK_SHELF}/${this.props.authUser.uid}`)
-                console.log("Document successfully deleted!");
             }).catch(function(error) {
                 console.error("Error removing document: ", error);
             });
@@ -126,7 +123,6 @@ class ShowBookFormBase extends Component {
 
     avgRating = () => {
         let values = this.state.rating
-        console.log(values,'values')
         let sum = values.reduce((previous, current) => current += previous)
         let avg = sum / values.length    
         return avg

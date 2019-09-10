@@ -25,7 +25,6 @@ class Home extends Component {
         .orderBy('viewCount','desc').limit(5)
             .get()
             .then((querySnapshot) =>{
-                console.log(querySnapshot.docs[0].data(),'<querysnap')
                 this.setState({
                     topViews: querySnapshot.docs.map(q => Object.assign(q.data(),{id: q.id}))
                 })
@@ -39,7 +38,6 @@ class Home extends Component {
         .orderBy('likeCount','desc').limit(5)
             .get()
             .then((querySnapshot) =>{
-                console.log(querySnapshot.docs[0].data(),'<querysnap')
                 this.setState({
                     topLikes: querySnapshot.docs.map(q => Object.assign(q.data(),{id: q.id}))
                 })

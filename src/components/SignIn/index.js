@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter, NavLink } from 'react-router-dom'
-import { Button, Form, Grid, Header, Image, Message, Segment} from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Button, Form, Grid, Header, Message, Segment} from 'semantic-ui-react';
 
 import { withFirebase } from '../Firebase'
 import * as ROUTES from '../../constants/routes'
@@ -16,7 +15,7 @@ class SignInFormBase extends Component {
     state = {
         email: '',
         password: '',
-        error: null
+        error: ''
     }
 
     onSubmit = event => {
@@ -29,7 +28,7 @@ class SignInFormBase extends Component {
             this.props.history.push(ROUTES.HOME)
           )
           .catch(error => {
-            this.setState({error})
+            this.setState({error: error.message})
           })
           
       }
@@ -47,6 +46,13 @@ class SignInFormBase extends Component {
                     <Header as='h2' textAlign='center'>
                         Login
                     </Header>
+                    {this.state.error ?
+                    <Message negative>
+                        {this.state.error}
+                    </Message>
+                    :
+                    <span></span>
+                    }
                     <Form onSubmit={this.onSubmit}>
                         <Segment stacked>
                         Email:

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Route, Switch} from 'react-router-dom'
 import {Container} from 'semantic-ui-react'
 import * as ROUTES from '../../constants/routes'
-import {withFireBase, withFirebase} from '../Firebase'
+import {withFirebase} from '../Firebase'
 
 import HomePage from '../Home'
 import SignUpPage from '../SignUp'

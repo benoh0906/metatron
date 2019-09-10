@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { withFirebase } from '../Firebase'
 import * as ROUTES from '../../constants/routes'
-import { Icon,Label, Rating, Button, Dimmer, Loader, Header, Segment} from 'semantic-ui-react';
+import {Button, Dimmer, Loader, Header, Segment, Rating} from 'semantic-ui-react';
 
 
 
@@ -13,18 +13,6 @@ const ShowBookOut = (props) => (
         {props.authUser ? <ShowBookOutForm updateUser={props.updateUser} setUserId={props.setUserId} authUser={props.authUser}/>: <NoAuth /> }
     </div>
 )
-
-// const ShowBookOut = ({props}) => (
-//         <div>
-//             {
-//                 authUser ? <ShowBookOutForm updateUser={props.updateUser} setUserId={props.setUserId} authUser={props.authUser}/>
-//                 :
-//                 <NoAuth>
-//             }
-//         </div>
-//     )
-
-
 
 const NoAuth = () => (
     <div>Please Log In</div>
@@ -56,7 +44,7 @@ class ShowBookOutFormBase extends Component {
     }
     
     submitRating = () => {
-        this.state.rater.find( e => {return e==this.props.authUser.uid})
+        this.state.rater.find( e => {return e===this.props.authUser.uid})
         ? 
             this.setState({rated:true})
         :
@@ -65,6 +53,11 @@ class ShowBookOutFormBase extends Component {
             rater: this.props.firebase.firestore.FieldValue.arrayUnion(this.props.authUser.uid)
         })
         this.setState({rated:true})
+    }
+    rateCheck = () => {
+        if(this.state.rater.find(e => {return e === this.props.authUser.uid })){
+            return true
+        }
     }
     likeCount=() => {
         this.state.liker.find(e => {return e==this.props.authUser.uid })
@@ -79,7 +72,12 @@ class ShowBookOutFormBase extends Component {
             likedBook: this.props.firebase.firestore.FieldValue.arrayUnion(this.props.match.params.id)
         })
     }
-
+    avgRating = () => {
+        let values = this.state.rating
+        let sum = values.reduce((previous, current) => current += previous)
+        let avg = sum / values.length    
+        return avg
+    }
     viewCount = () => {
         this.props.firebase.db.collection('books').doc(this.props.match.params.id).update({
             viewCount: this.props.firebase.firestore.FieldValue.increment(1)
@@ -88,7 +86,6 @@ class ShowBookOutFormBase extends Component {
     
 
     readTextFile = id => {
-        console.log(id)
         this.props.firebase.db.collection("books").doc(id)
             .get()
             .then( doc => {
@@ -103,6 +100,7 @@ class ShowBookOutFormBase extends Component {
                     currentRating: doc.data().rating,
                     likeCount:doc.data().likeCount,
                     liker:doc.data().liker,
+                    rating:doc.data().rating,
                     mounted:true
                 })
             })
@@ -110,7 +108,6 @@ class ShowBookOutFormBase extends Component {
     likeCheck = () => {
                 
         if(this.state.liker.find(e => {return e === this.props.authUser.uid })){
-            console.log('liker worked')
             return true
         }
     }
@@ -120,7 +117,7 @@ class ShowBookOutFormBase extends Component {
 
 
     render(){
-        // const { rating } = this.state
+        const { rating } = this.state
 
 
         return(
@@ -166,26 +163,31 @@ class ShowBookOutFormBase extends Component {
                         <iframe id="frame" width="800" height="400" src={this.state.textfile} ></iframe>
                     </Segment>                    
                         
-                    {/* <Segment textAlign="center" >
-                        <div>
-                            <div>Rating: {rating}</div>
-                            <input
-                                type='range'
-                                min={0}
-                                max={5}
-                                value={rating}
-                                onChange={this.handleChange}
-                            />
-                            <br />
-                            <Rating rating={this.state.rating} maxRating={5} />
-                        </div>
-                        {this.state.rated ?
-                            <Button >Rating Complete</Button>
-                        :
-                        <Button onClick={this.submitRating}>Submit Rating</Button>
-                        }
+                    <Segment textAlign="center" >
+                        {this.rateCheck() ?
+                            <div>
+                                <Rating defaultRating={this.avgRating()} maxRating={5} disabled /><p>{this.avgRating()}</p>
+                                <Button color='orange' >Rating Complete</Button>
 
-                    </Segment> */}
+                            </div>
+                            :
+                            <div>
+                                <div>Rating: {rating}</div>
+                                <input
+                                    type='range'
+                                    min={0}
+                                    max={5}
+                                    value={rating}
+                                    onChange={this.handleChange}
+                                />
+                                <br />
+                                <Rating rating={this.state.rating} maxRating={5} /><br/>
+                                <Button inverted color='orange' onClick={ this.submitRating}>Submit Rating</Button>
+                            </div>
+
+                            }
+
+                    </Segment>
                 </div>
                     : 
                     <Dimmer active>

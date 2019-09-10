@@ -51,7 +51,7 @@ class SignUpFormBase extends Component {
                 this.props.history.push(ROUTES.HOME)
             })
         .catch(error => {
-            this.setState({error})
+            this.setState({error: error.message})
         })
     }
     onChange = e => {
@@ -63,7 +63,6 @@ class SignUpFormBase extends Component {
 
     }
     render(){
-        console.log(this.state)
         const { username, email, passwordOne, passwordTwo, image, error}= this.state
 
         const isInvalid = 
@@ -78,6 +77,13 @@ class SignUpFormBase extends Component {
               <Header as='h2' textAlign='center'>
                 Sign Up
               </Header>
+              {this.state.error ?
+                    <Message negative>
+                        {this.state.error}
+                    </Message>
+                    :
+                    <span></span>
+                    }
               <Form onSubmit={this.onSubmit}>
                   <Segment stacked>
                   Username:

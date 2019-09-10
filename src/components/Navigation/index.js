@@ -5,17 +5,7 @@ import { NavLink, Link } from 'react-router-dom'
 import * as ROUTES from '../../constants/routes'
 import SignOutButton from '../SignOut'
 import "./index.css"
-import {
-    Container,
-    Divider,
-    Dropdown,
-    Grid,
-    Header,
-    Image,
-    List,
-    Menu,
-    Segment,
-  } from 'semantic-ui-react'
+import {Image,Menu} from 'semantic-ui-react'
 import logo from './logo2.png'
 
 
@@ -36,7 +26,7 @@ const NavigationAuth = ({authUser})=> (
             <Link to={`${ROUTES.ACCOUNT}/${authUser.uid}`}>Account</Link>
         </Menu.Item>
         <Menu.Item >
-            <Link to={`${ROUTES.BOOK_SHELF}/${authUser.uid}`}>Book Shelf</Link>
+            <Link to={`${ROUTES.BOOK_SHELF}/${authUser.uid}`}>Bookshelf</Link>
         </Menu.Item>
         <Menu.Item>
             <Link to={ROUTES.CREATE_BOOK}>Make Book</Link>
@@ -52,7 +42,7 @@ const NavigationNonAuth = () => (
             <Menu.Item header>
                 <Link to={ROUTES.HOME}><Image size='small' src={logo} style={{ marginRight: '1.5em' }} /></Link>
             </Menu.Item>
-            <Menu.Item position='right' size='small'>
+            <Menu.Item size='small'>
                 <NavLink to={ROUTES.SIGN_IN}>Sign In</NavLink>
             </Menu.Item>
             <Menu.Item >

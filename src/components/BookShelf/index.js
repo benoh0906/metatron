@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Container, Button, Item, Form, Grid, Header, Image, Message, Card, Icon} from 'semantic-ui-react';
+import {Header, Card} from 'semantic-ui-react';
 import {Link} from 'react-router-dom'
 import * as ROUTES from '../../constants/routes'
 import {withRouter} from 'react-router-dom'
@@ -12,7 +12,7 @@ const BookShelf = ({authUser}) => (
     <div>
         {authUser ? <BookShelfForm authUser = {authUser}/> : <NoAuth /> }
     </div>
-)
+)  
 
 class BookShelfBase extends Component {
     state={
@@ -32,7 +32,6 @@ class BookShelfBase extends Component {
         this.props.firebase.db.collection("books").where("authorId", "==", userId)
             .get()
             .then((querySnapshot) =>{
-                console.log(querySnapshot,'<quertysnap')
                 this.setState({
                     textfiles: querySnapshot.docs.map(q => Object.assign(q.data(),{id: q.id}))
                 })
@@ -49,7 +48,6 @@ class BookShelfBase extends Component {
         this.props.firebase.db.collection("books").where("liker", "array-contains", userId)
             .get()
             .then((querySnapshot) =>{
-                console.log(querySnapshot,'<quertysnap')
                 this.setState({
                     likedBooks: querySnapshot.docs.map(q => Object.assign(q.data(),{id: q.id}))
                 })
@@ -64,11 +62,10 @@ class BookShelfBase extends Component {
     }
 
     render (){
-        console.log(this.state.likedBooks)
         return(
             <main>
 
-                <Header as="h2">My Book</Header>
+                <Header as="h2">My Bookshelf</Header>
 
                 <Card.Group centered itemsPerRow={4}>
                     {this.state.textfiles.map((doc)=>{
