@@ -43,11 +43,12 @@ class SignUpFormBase extends Component {
                     })
                 : this.props.firebase.db.collection('users').doc(authUser.user.uid).set({
                     username,
-                    email
+                    email,
+                    imageURL:'https://react.semantic-ui.com/images/avatar/large/matthew.png'
                   })
             })
             .then(()=>{
-                this.props.history.push(ROUTES.SIGN_IN)
+                this.props.history.push(ROUTES.HOME)
             })
         .catch(error => {
             this.setState({error})
@@ -57,13 +58,9 @@ class SignUpFormBase extends Component {
         if(e.target.name !== 'image'){
             this.setState({[e.target.name]: e.target.value})
         } else {
-            console.log(e.target.files[0],'<e.target.files')
             this.setState({image : e.target.files[0]})
-            console.log(this.state.image,'<this state imge')
         }
-        // this.setState({
-        //     [e.target.name] : e.target.value 
-        //   })
+
     }
     render(){
         console.log(this.state)
@@ -91,10 +88,10 @@ class SignUpFormBase extends Component {
                   <Form.Input fluid icon='lock' iconPosition='left' type='password' name='passwordOne' value={passwordOne} onChange={this.onChange}/>
                   Confirm Password:
                   <Form.Input fluid icon='lock' iconPosition='left' type='password' name='passwordTwo' value={passwordTwo} onChange={this.onChange}/>
-                  Profile Image:
-                  <Form.Input fluid icon='image' iconPosition='left' type="file" name='image' onChange={this.onChange}/>
+                  Profile Image (.jpg, .jpeg, .png):
+                  <Form.Input fluid icon='image' iconPosition='left' type="file" name='image' accept = ".jpeg, .jpg, .png" onChange={this.onChange}/>
 
-                  <Button fluid size='large' type='sumbit' disabled={false}>Sign Up</Button>
+                  <Button fluid size='large' type='sumbit' disabled={isInvalid}>Sign Up</Button>
                   {error && error.message}
                   <Message>
                     Already a member? <Link to='/signin'>Login</Link>

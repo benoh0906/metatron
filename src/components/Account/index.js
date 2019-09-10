@@ -26,16 +26,16 @@ const AccountInfo = ({authUser}) => (
                 <Grid.Row>
                     <Item.Group>
                         <Item>
-                        <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
+                        <Image src={authUser.imageURL} wrapped ui={false} />
                             <Item.Content>
                                 <Item.Header>Username: {authUser.username}</Item.Header>
                                 <Item.Description>
                                     Email: {authUser.email}<br/>
                                 </Item.Description>
                                 <Item.Extra>
-                                    <Button><Link to={ROUTES.EDIT_USER}>Edit User Info</Link></Button>
-                                    <Button><Link to={ROUTES.UPDATE_PW}>Update PW</Link></Button>
-                                </Item.Extra>
+                                    <Button><Link to={`${ROUTES.EDIT_USER}/${authUser.uid}`}>Edit User Info</Link></Button>
+                                    <Button><Link to={`${ROUTES.UPDATE_PW}/${authUser.uid}`}>Update PW</Link></Button>
+                                </Item.Extra>       
                             </Item.Content>
                         </Item>   
                     </Item.Group>                         

@@ -1,0 +1,9 @@
+#frame{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+#mainDiv{
+    display: flex;
+    justify-content: center;
+}

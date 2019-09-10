@@ -1,0 +1,9 @@
+#navOn {
+    display:flex;
+    justify-content: center;
+}
+
+#navOff {
+    display:flex;
+    justify-content: center;
+}

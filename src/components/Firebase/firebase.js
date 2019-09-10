@@ -19,6 +19,7 @@ const config = {
           this.auth = app.auth()
           this.db = app.firestore()
           this.storage = app.storage()
+          this.firestore = app.firestore
       }
 
       doCreateUserWithEmailAndPassword = (email, password)=>{
@@ -36,7 +37,18 @@ const config = {
         user = uid => this.db.collection('users').doc(uid)
         users = () => this.db.collection('users')
 
+      doUpdateProfile = (email, username, imageURL) =>{
+        return (
+          this.auth.currentUser.updateProfile({
+            displayName: username,
+            email: email,
+            imageURL: imageURL
+          })
+        )
+      }
+
       // storage
+      
 
       doStoreFile = file => this.storage.ref().child(file.name).put(file)
   }
