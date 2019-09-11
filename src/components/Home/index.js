@@ -2,18 +2,23 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import { withFirebase } from '../Firebase'
+import { CarouselProvider, Image, Slide, Slider } from "pure-react-carousel";
 
-import{ Card, Header} from 'semantic-ui-react'
+import{ Card, Header, Message, Segment, Container, Divider} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import * as ROUTES from '../../constants/routes'
 
+import CustomDotGroup from "./CustomDotGroup";
 
+import ImageCarousel from "./ImageCarousel";
+
+import "pure-react-carousel/dist/react-carousel.es.css";
 
 class Home extends Component {
     state = {
 
           topViews:[],
-          topLikes:[]
+          topLikes:[],
 
       }
     componentDidMount(){
@@ -50,6 +55,16 @@ class Home extends Component {
     render(){
         return (
             <div>
+
+                {/* <Container style={{ margin: 20 }}>
+                    <Segment attached="bottom">
+                        <ImageCarousel  />
+                    </Segment>
+                </Container> 
+   */}
+
+
+
                 <Header>Top 5 Views</Header>
                 <Card.Group centered itemsPerRow={4}>
 

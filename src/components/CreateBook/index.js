@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import { CarouselProvider, Image, Slide, Slider } from "pure-react-carousel";
 import { withRouter } from 'react-router-dom'
-import {Form, Grid, Header, Button, Container} from 'semantic-ui-react'
+import {Form, Grid, Header, Button, Container, Divider} from 'semantic-ui-react'
 import { withFirebase } from '../Firebase'
 import * as ROUTES from '../../constants/routes'
 
@@ -18,48 +19,78 @@ class CreateBookFormBase extends Component {
         description:'',
         genre:"",
         textFile:null,
-        error: null
+        error: null,
+        image: null
     }
 
 
     onSubmit = e => {
-        const { title,description, textFile, genre }= this.state
+        const { title,description, textFile, genre, image }= this.state
         const { authUser } = this.props
 
         e.preventDefault()
 
+        image 
+            ?
+            this.props.firebase.doStoreFile(this.state.image)
+                    .then(file => file.ref.getDownloadURL())
+                    .then(url => {
+                        this.props.firebase.db.collection('books').doc().set({
+                            imageURL: url,
+                            title,
+                            description,
+                            author: authUser.username,
+                            authorId: authUser.uid,
+                            textFile: url,
+                            rating:[3],
+                            rater:[],
+                            viewCount:0,
+                            likeCount:0,
+                            liker:[],
+                            genre
+                        })
+                    })
+                    .then(()=>{
+                        this.props.history.push(`${ROUTES.BOOK_SHELF}/${authUser.uid}`)
+    
+                    })
+                    .catch(error => {
+                        this.setState({error})
+                    })
         
-        this.props.firebase.doStoreFile(textFile)
-            .then(file => file.ref.getDownloadURL())
-            .then(url => {
-                this.props.firebase.db.collection('books').doc().set({
-                    title,
-                    description,
-                    author: authUser.username,
-                    authorId: authUser.uid,
-                    textFile: url,
-                    rating:[3],
-                    rater:[],
-                    viewCount:0,
-                    likeCount:0,
-                    liker:[],
-                    genre
+            :
+            this.props.firebase.doStoreFile(textFile)
+                .then(file => file.ref.getDownloadURL())
+                .then(url => {
+                    this.props.firebase.db.collection('books').doc().set({
+                        title,
+                        description,
+                        author: authUser.username,
+                        authorId: authUser.uid,
+                        textFile: url,
+                        rating:[3],
+                        rater:[],
+                        viewCount:0,
+                        likeCount:0,
+                        liker:[],
+                        genre
+                    })
                 })
-            })
-            .then(()=>{
-                this.props.history.push(`${ROUTES.BOOK_SHELF}/${authUser.uid}`)
+                .then(()=>{
+                    this.props.history.push(`${ROUTES.BOOK_SHELF}/${authUser.uid}`)
 
-            })
-        .catch(error => {
-            this.setState({error})
-        })
+                })
+                .catch(error => {
+                    this.setState({error})
+                })
     
 }
 
     onChange = (e) => {
-        if(e.target.name !== 'textFile'){
+        if(e.target.name !== 'textFile' && e.target.name !== 'image'){
             this.setState({[e.target.name]: e.target.value})
-        
+        } else if (e.target.name === 'image'){
+            this.setState({image : e.target.files[0]})
         } else {
             this.setState({textFile : e.target.files[0]})
         }
@@ -112,7 +143,9 @@ class CreateBookFormBase extends Component {
                         <Form.Select type="select" placeholder="Genre" name="genre" onChange={(e, data) => this.onGenreChange(e, data)} options={genreOptions} value={this.state.genre}/><br/>
                         Upload Text File (.txt):
                         <Form.Input fluid icon='file' iconPosition='left' type="file" name='textFile' accept = ".txt" onChange={this.onChange}/>
-                        
+                        Upload Cover (.jpg, .jpeg, .png)
+                        <Form.Input fluid icon='image' iconPosition='left' type="file" name='image' accept = ".jpeg, .jpg, .png" onChange={this.onChange}/>
+
 
                         <Button type="submit" disabled={isInvalid} >Submit</Button>
                     </Form>

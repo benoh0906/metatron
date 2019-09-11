@@ -76,6 +76,7 @@ class BookShelfBase extends Component {
                             <div >
 
                             <Card raised key={doc.id}
+                            image = {doc.imageURL}
                             header={doc.title}
                             description={doc.description}
                             meta={`Views: ${doc.viewCount} | Rating: ${avg} `}
